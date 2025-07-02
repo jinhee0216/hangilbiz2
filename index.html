@@ -523,6 +523,29 @@ class="space-y-6">
 </div>
 
 <script>
+        // 모달 열기 (통합된 함수)
+    function openModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.remove('hidden');
+        }
+    }
+
+    // 모달 닫기 (통합된 함수)
+    function closeModal(modalId) {
+        const modal = document.getElementById(modalId);
+        if (modal) {
+            modal.classList.add('hidden');
+        }
+    }
+
+    // 모달 외부 영역 클릭 시 닫기
+    window.onclick = function(event) {
+        if (event.target.classList.contains('modal')) {
+            event.target.classList.add('hidden');
+        }
+    }
+        
 $(document).ready(function() {
     $('#policyFundForm').on('submit', function(e) {
         e.preventDefault(); // 새로고침 방지
