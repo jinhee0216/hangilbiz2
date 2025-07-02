@@ -542,44 +542,55 @@
     }
 
     $(document).ready(function() {
-  $('#policyFundForm').on('submit', function(e) {
-    e.preventDefault(); // 기본 제출 중단 (AJAX로 처리)
+        $('#policyFundForm').on('submit', function(e) {
+            e.preventDefault(); // 새로고침 방지
 
-    // 유효성 검사
-    const birthDate = $('#birthDate').val();
-    if (!/^\d{6}-[1-4]$/.test(birthDate)) {
-      alert('생년월일을 올바른 형식으로 입력하세요.');
-      return;
-    }
+            // 유효성 검사
+            const birthDate = $('#birthDate').val();
+            if (!/^\d{6}-[1-4]$/.test(birthDate)) {
+                alert('생년월일을 올바른 형식(예: 871220-1)으로 입력하세요.');
+                return;
+            }
 
-    const phonePart1 = $('#phonePart1').val();
-    const phonePart2 = $('#phonePart2').val();
-    const phonePart3 = $('#phonePart3').val();
+            const phonePart1 = $('#phonePart1').val();
+            const phonePart2 = $('#phonePart2').val();
+            const phonePart3 = $('#phonePart3').val();
 
-    if (!/^[0-9]{3}$/.test(phonePart1) || !/^[0-9]{4}$/.test(phonePart2) || !/^[0-9]{4}$/.test(phonePart3)) {
-      alert('연락처를 올바른 형식으로 입력하세요.');
-      return;
-    }
+            if (!/^[0-9]{3}$/.test(phonePart1) || !/^[0-9]{4}$/.test(phonePart2) || !/^[0-9]{4}$/.test(phonePart3)) {
+                alert('연락처를 올바른 형식으로 입력하세요.');
+                return;
+            }
 
-    const phoneFormatted = `${phonePart1}-${phonePart2}-${phonePart3}`;
-    $('#phone').val(phoneFormatted);
+            const phoneFormatted = `${phonePart1}-${phonePart2}-${phonePart3}`;
+            $('#phone').val(phoneFormatted);
 
-    const formData = new FormData(this);
+            // 폼 데이터 생성
+            const formData = new FormData(this);
 
-    $.ajax({
-      url: $(this).attr('action'),
-      type: 'POST',
-      data: formData,
-      processData: false,
-      contentType: false,
-      success: function(response) {
-        // 성공 시 신청 완료 메시지 표시
-        $('#formContainer').hide();
-        $('#successMessage').show();
-      },
-      error: function() {
-        alert('접수 중 오류가 발생했습니다. 다시 시도해 주세요.');
-      }
+            // AJAX로 Node.js에 전송
+            $.ajax({
+                url: $(this).attr('action'),
+                type: 'POST',
+                data: formData,
+                processData: false,
+                contentType: false,
+                success: function(response) {
+                    console.log('AJAX success response:', response);
+                    $('#formContainer').hide();
+                    $('#successMessage').show();
+                },
+                error: function(xhr, status, error) {
+                    console.error('AJAX error:', error);
+                    alert('접수 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                }
+            });
+        });
     });
-  });
+</script>
+
+<script>
+    document.addEventListener('contextmenu', e => e.preventDefault());
+    document.addEventListener('selectstart', e => e.preventDefault());
+</script>
+
 });
