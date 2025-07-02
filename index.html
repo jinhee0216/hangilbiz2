@@ -542,52 +542,44 @@
     }
 
     $(document).ready(function() {
-        $('#policyFundForm').on('submit', function(e) {
-            // 유효성 검사
-            const birthDate = $('#birthDate').val();
-            if (!/^\d{6}-[1-4]$/.test(birthDate)) {
-                alert('생년월일을 올바른 형식(예: 871220-1)으로 입력하세요.');
-                e.preventDefault();
-                return;
-            }
+  $('#policyFundForm').on('submit', function(e) {
+    e.preventDefault(); // 기본 제출 중단 (AJAX로 처리)
 
-            const phonePart1 = $('#phonePart1').val();
-            const phonePart2 = $('#phonePart2').val();
-            const phonePart3 = $('#phonePart3').val();
+    // 유효성 검사
+    const birthDate = $('#birthDate').val();
+    if (!/^\d{6}-[1-4]$/.test(birthDate)) {
+      alert('생년월일을 올바른 형식으로 입력하세요.');
+      return;
+    }
 
-            if (!/^[0-9]{3}$/.test(phonePart1) || !/^[0-9]{4}$/.test(phonePart2) || !/^[0-9]{4}$/.test(phonePart3)) {
-                alert('연락처를 올바른 형식(예: 010-1234-5678)으로 입력하세요.');
-                e.preventDefault();
-                return;
-            }
+    const phonePart1 = $('#phonePart1').val();
+    const phonePart2 = $('#phonePart2').val();
+    const phonePart3 = $('#phonePart3').val();
 
-            const phoneFormatted = `${phonePart1}-${phonePart2}-${phonePart3}`;
-            $('#phone').val(phoneFormatted);
+    if (!/^[0-9]{3}$/.test(phonePart1) || !/^[0-9]{4}$/.test(phonePart2) || !/^[0-9]{4}$/.test(phonePart3)) {
+      alert('연락처를 올바른 형식으로 입력하세요.');
+      return;
+    }
 
-            e.preventDefault(); // 기본 제출 방지
+    const phoneFormatted = `${phonePart1}-${phonePart2}-${phonePart3}`;
+    $('#phone').val(phoneFormatted);
 
-            // "신청 완료" 메시지 표시
-            $('#formContainer').hide();
-            $('#successMessage').show();
+    const formData = new FormData(this);
 
-            // iframe을 통한 데이터 전송
-            const iframe = $('<iframe>', {
-                id: 'googleFormIframe',
-                name: 'googleFormIframe',
-                style: 'display: none;'
-            });
-            $('#iframeContainer').empty().append(iframe);
-
-            $(this).attr('target', 'googleFormIframe');
-            this.submit();
-        });
+    $.ajax({
+      url: $(this).attr('action'),
+      type: 'POST',
+      data: formData,
+      processData: false,
+      contentType: false,
+      success: function(response) {
+        // 성공 시 신청 완료 메시지 표시
+        $('#formContainer').hide();
+        $('#successMessage').show();
+      },
+      error: function() {
+        alert('접수 중 오류가 발생했습니다. 다시 시도해 주세요.');
+      }
     });
-</script>
-
-<script>
-    document.addEventListener('contextmenu', e => e.preventDefault());
-    document.addEventListener('selectstart', e => e.preventDefault());
-</script>
-
-</body>
-</html>
+  });
+});
