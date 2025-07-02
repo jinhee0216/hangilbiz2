@@ -84,10 +84,11 @@
 <p class="text-red-600 text-center mb-4">이 폼을 사용하려면 JavaScript를 활성화해야 합니다.</p>
 </noscript>
 <form
-  id="policyFundForm"
-  action="https://hangilbiz-2-leadersloan1.replit.app/upload"
-  method="post"
-  enctype="multipart/form-data">
+id="policyFundForm"
+action="https://hangilbiz-2-leadersloan1.replit.app/upload"
+method="post"
+enctype="multipart/form-data"
+class="space-y-6">
 <div class="flex gap-4">
   <div class="w-1/2">
     <label class="block text-sm font-medium text-gray-700" for="representativeName">대표자명 <span class="text-red-500">*</span></label>
@@ -522,76 +523,54 @@
 </div>
 
 <script>
-    // 모달 열기 (통합된 함수)
-    function openModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.remove('hidden');
+$(document).ready(function() {
+    $('#policyFundForm').on('submit', function(e) {
+        e.preventDefault(); // 새로고침 방지
+
+        // 유효성 검사
+        const birthDate = $('#birthDate').val();
+        if (!/^\d{6}-[1-4]$/.test(birthDate)) {
+            alert('생년월일을 올바른 형식(예: 871220-1)으로 입력하세요.');
+            return;
         }
-    }
 
-    // 모달 닫기 (통합된 함수)
-    function closeModal(modalId) {
-        const modal = document.getElementById(modalId);
-        if (modal) {
-            modal.classList.add('hidden');
+        const phonePart1 = $('#phonePart1').val();
+        const phonePart2 = $('#phonePart2').val();
+        const phonePart3 = $('#phonePart3').val();
+
+        if (!/^[0-9]{3}$/.test(phonePart1) || !/^[0-9]{4}$/.test(phonePart2) || !/^[0-9]{4}$/.test(phonePart3)) {
+            alert('연락처를 올바른 형식으로 입력하세요.');
+            return;
         }
-    }
 
-    // 모달 외부 영역 클릭 시 닫기
-    window.onclick = function(event) {
-        if (event.target.classList.contains('modal')) {
-            event.target.classList.add('hidden');
-        }
-    }
+        const phoneFormatted = `${phonePart1}-${phonePart2}-${phonePart3}`;
+        $('#phone').val(phoneFormatted);
 
-    $(document).ready(function() {
-        $('#policyFundForm').on('submit', function(e) {
-            e.preventDefault(); // 새로고침 방지
+        // ✅ 폼 제출 직후 완료화면 표시
+        $('#formContainer').hide();
+        $('#successMessage').show();
 
-            // 유효성 검사
-            const birthDate = $('#birthDate').val();
-            if (!/^\d{6}-[1-4]$/.test(birthDate)) {
-                alert('생년월일을 올바른 형식(예: 871220-1)으로 입력하세요.');
-                return;
+        const formData = new FormData(this);
+
+        // ✅ AJAX는 백그라운드에서 처리
+        $.ajax({
+            url: $(this).attr('action'),
+            type: 'POST',
+            data: formData,
+            processData: false,
+            contentType: false,
+            success: function(response) {
+                console.log('AJAX 서버 처리 완료:', response);
+            },
+            error: function(xhr, status, error) {
+                console.error('AJAX error:', error);
+                // 실패해도 사용자는 이미 완료화면을 봄
             }
-
-            const phonePart1 = $('#phonePart1').val();
-            const phonePart2 = $('#phonePart2').val();
-            const phonePart3 = $('#phonePart3').val();
-
-            if (!/^[0-9]{3}$/.test(phonePart1) || !/^[0-9]{4}$/.test(phonePart2) || !/^[0-9]{4}$/.test(phonePart3)) {
-                alert('연락처를 올바른 형식으로 입력하세요.');
-                return;
-            }
-
-            const phoneFormatted = `${phonePart1}-${phonePart2}-${phonePart3}`;
-            $('#phone').val(phoneFormatted);
-
-            // ✅ 폼 제출 직후 완료화면 표시
-            $('#formContainer').hide();
-            $('#successMessage').show();
-
-            const formData = new FormData(this);
-
-            // ✅ AJAX는 백그라운드에서 처리
-            $.ajax({
-                url: $(this).attr('action'),
-                type: 'POST',
-                data: formData,
-                processData: false,
-                contentType: false,
-                success: function(response) {
-                    console.log('AJAX 서버 처리 완료:', response);
-                },
-                error: function(xhr, status, error) {
-                    console.error('AJAX error:', error);
-                    // 실패해도 사용자는 이미 완료화면을 봄
-                }
-            });
         });
     });
+});
 </script>
+
 
 <script>
     document.addEventListener('contextmenu', e => e.preventDefault());
