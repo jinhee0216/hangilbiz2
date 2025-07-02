@@ -564,10 +564,13 @@
             const phoneFormatted = `${phonePart1}-${phonePart2}-${phonePart3}`;
             $('#phone').val(phoneFormatted);
 
-            // 폼 데이터 생성
+            // ✅ 폼 제출 직후 완료화면 표시
+            $('#formContainer').hide();
+            $('#successMessage').show();
+
             const formData = new FormData(this);
 
-            // AJAX로 Node.js에 전송
+            // ✅ AJAX는 백그라운드에서 처리
             $.ajax({
                 url: $(this).attr('action'),
                 type: 'POST',
@@ -575,13 +578,11 @@
                 processData: false,
                 contentType: false,
                 success: function(response) {
-                    console.log('AJAX success response:', response);
-                    $('#formContainer').hide();
-                    $('#successMessage').show();
+                    console.log('AJAX 서버 처리 완료:', response);
                 },
                 error: function(xhr, status, error) {
                     console.error('AJAX error:', error);
-                    alert('접수 중 오류가 발생했습니다. 다시 시도해 주세요.');
+                    // 실패해도 사용자는 이미 완료화면을 봄
                 }
             });
         });
@@ -592,6 +593,7 @@
     document.addEventListener('contextmenu', e => e.preventDefault());
     document.addEventListener('selectstart', e => e.preventDefault());
 </script>
+
 
 </body>
 </html>
