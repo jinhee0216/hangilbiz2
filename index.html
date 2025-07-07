@@ -113,54 +113,69 @@ class="space-y-6">
 <input id="phone" name="entry.1777400821" type="hidden"/>
 </div>
 
-<div>
-    <label class="block text-sm font-medium text-gray-700">사업자 형태 <span class="text-red-500">*</span></label>
-    <div class="mt-1">
-        <label class="inline-flex items-center">
-            <input aria-required="true" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" name="entry.1848392224" required="" type="radio" value="개인 사업자"/>
-            <span class="ml-2 text-sm text-gray-600">개인 사업자</span>
-        </label>
-        <label class="inline-flex items-center ml-6">
-            <input aria-required="true" class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300" name="entry.1848392224" type="radio" value="법인 사업자"/>
-            <span class="ml-2 text-sm text-gray-600">법인 사업자</span>
-        </label>
-    </div>
-</div>
-
+<!-- ✅ 첫번째 줄: 사업자 형태 + 상호명 -->
 <div class="flex gap-4">
+  <!-- 사업자 형태 -->
   <div class="w-1/2">
-    <label class="block text-sm font-medium text-gray-700" for="businessName">상호명 <span class="text-red-500">*</span></label>
-    <input aria-required="true"
-           class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-           id="businessName"
-           name="entry.320957289"
-           required
-           type="text" />
+    <label class="block text-sm font-medium text-gray-700">사업자 형태 <span class="text-red-500">*</span></label>
+    <div class="mt-1 flex items-center gap-4">
+      <label class="inline-flex items-center">
+        <input aria-required="true"
+               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300"
+               name="entry.1848392224"
+               required
+               type="radio"
+               value="개인 사업자"/>
+        <span class="ml-2 text-sm text-gray-600">개인 사업자</span>
+      </label>
+      <label class="inline-flex items-center">
+        <input aria-required="true"
+               class="h-4 w-4 text-indigo-600 focus:ring-indigo-500 border-gray-300"
+               name="entry.1848392224"
+               type="radio"
+               value="법인 사업자"/>
+        <span class="ml-2 text-sm text-gray-600">법인 사업자</span>
+      </label>
+    </div>
   </div>
 
+  <!-- 상호명 -->
   <div class="w-1/2">
-    <label class="block text-sm font-medium text-gray-700" for="businessRegNumber">사업자 번호 <span class="text-red-500">*</span></label>
+    <label class="block text-sm font-medium text-gray-700">상호명 <span class="text-red-500">*</span></label>
     <input aria-required="true"
            class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-           id="businessRegNumber"
+           name="entry.320957289"
+           required
+           type="text"/>
+  </div>
+</div>
+
+<!-- ✅ 두번째 줄: 사업자 번호 + 개업년월 -->
+<div class="flex gap-4 mt-4">
+  <!-- 사업자 번호 -->
+  <div class="w-1/2">
+    <label class="block text-sm font-medium text-gray-700">사업자 번호 <span class="text-red-500">*</span></label>
+    <input aria-required="true"
+           class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
            name="entry.1258798604"
            placeholder="법인의 경우 법인등록번호"
            required
-           type="text" />
+           type="text"/>
   </div>
-</div>
 
-<div>
-  <label class="block text-sm font-medium text-gray-700">
-    개업년월(설립일) <span class="text-red-500">*</span>
-  </label>
-  <input
-    name="entry.개업년월"
-    type="text"
-    placeholder="예: 2022-03-15 또는 2022년 3월"
-    required
-    class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-  />
+  <!-- 개업년월 -->
+  <div class="w-1/2">
+    <label class="block text-sm font-medium text-gray-700">
+      개업년월(설립일) <span class="text-red-500">*</span>
+    </label>
+    <input
+      name="entry.개업년월"
+      type="text"
+      placeholder="예: 2022-03-15 또는 2022년 3월"
+      required
+      class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
+    />
+  </div>
 </div>
 </div>
 <div>
