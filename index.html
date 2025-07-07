@@ -243,36 +243,11 @@ class="space-y-6">
 <label class="block text-sm font-medium text-gray-700" for="employeeCount">직원수 <span class="text-red-500">*</span></label>
 <input aria-required="true" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" id="employeeCount" name="entry.520614711" placeholder="예: 3명" required="" type="text"/>
 </div>
-<div class="flex gap-4">
-  <!-- NICE 신용점수 -->
-  <div class="w-1/2">
-    <label class="block text-sm font-medium text-gray-700">
-      NICE 신용점수 <span class="text-red-500">*</span>
-    </label>
-    <input
-      name="entry.NICE점수"
-      type="text"
-      placeholder="예: 700"
-      required
-      class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-    />
-  </div>
-
-  <!-- KCB 신용점수 -->
-  <div class="w-1/2">
-    <label class="block text-sm font-medium text-gray-700">
-      KCB 신용점수 <span class="text-red-500">*</span>
-    </label>
-    <input
-      name="entry.KCB점수"
-      type="text"
-      placeholder="예: 720"
-      required
-      class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500"
-    />
-  </div>
+<div>
+<label class="block text-sm font-medium text-gray-700" for="creditScore">NICE / KCB 신용점수 <span class="text-red-500">*</span></label>
+<input aria-required="true" class="mt-1 block w-full p-2 border border-gray-300 rounded-md focus:ring-indigo-500 focus:border-indigo-500" id="creditScore" name="entry.973911698" placeholder="예: NICE 700, KCB 720" required="" type="text"/>
 </div>
-
+        
 <div class="flex gap-4">
   <div class="w-1/2">
     <label class="block text-sm font-medium text-gray-700" for="existingLoan">기대출금액 <span class="text-red-500">*</span></label>
